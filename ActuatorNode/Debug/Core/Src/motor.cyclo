@@ -1,0 +1,4 @@
+../Core/Src/motor.c:4:6:motorInit	1
+../Core/Src/motor.c:24:6:setMotorPWM	16
+../Core/Src/motor.c:45:6:motorStart	1
+../Core/Src/motor.c:53:6:changeDirection	1

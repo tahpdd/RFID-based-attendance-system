@@ -1,0 +1,2 @@
+../Core/Src/sdram_cfg.c:34:6:SDRAM_IO_Init	24	static
+../Core/Src/sdram_cfg.c:78:6:SDRAM_Init	16	static

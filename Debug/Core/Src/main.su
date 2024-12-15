@@ -1,0 +1,15 @@
+../Drivers/CMSIS/Include/core_cm4.h:1814:22:__NVIC_SetPriority	16	static
+../Drivers/CMSIS/Include/core_cm4.h:2022:26:SysTick_Config	16	static
+../Core/Src/main.c:98:6:HAL_GPIO_EXTI_Callback	16	static
+../Core/Src/main.c:128:6:Set_Time	8	static
+../Core/Src/main.c:139:6:UI_Init	88	static
+../Core/Src/main.c:163:6:New_Page_Init	88	static
+../Core/Src/main.c:183:6:printStudent	80	static
+../Core/Src/main.c:203:6:Print_Students_InPg	24	static
+../Core/Src/main.c:208:6:Get_Time	64	static
+../Core/Src/main.c:220:6:Address_Init	32	static
+../Core/Src/main.c:232:6:New_SS	48	static
+../Core/Src/main.c:237:9:isDuplicateID	32	static
+../Core/Src/main.c:256:5:main	7104	static,ignoring_inline_asm
+../Core/Src/main.c:447:6:SystemClock_Config	88	static
+../Core/Src/main.c:492:6:Error_Handler	4	static,ignoring_inline_asm

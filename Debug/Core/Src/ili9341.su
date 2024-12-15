@@ -1,0 +1,8 @@
+../Core/Src/ili9341.c:7:6:ili9341_IO_Init	24	static
+../Core/Src/ili9341.c:15:6:ili9341_Init	8	static
+../Core/Src/ili9341.c:135:6:ili9341_NCS_High	4	static
+../Core/Src/ili9341.c:140:6:ili9341_NCS_Low	4	static
+../Core/Src/ili9341.c:145:6:ili9341_WRX_High	4	static
+../Core/Src/ili9341.c:150:6:ili9341_WRX_Low	4	static
+../Core/Src/ili9341.c:155:6:ili9341_Write_Cmd	16	static
+../Core/Src/ili9341.c:164:6:ili9341_Write_Data	16	static

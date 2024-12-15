@@ -1,0 +1,2 @@
+../Core/Src/ltdc_cfg.c:6:6:LTDC_IO_Init	1
+../Core/Src/ltdc_cfg.c:35:6:LTDC_Core_Init	1

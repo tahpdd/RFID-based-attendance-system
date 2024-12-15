@@ -1,0 +1,8 @@
+../Core/Src/ili9341.c:7:6:ili9341_IO_Init	1
+../Core/Src/ili9341.c:15:6:ili9341_Init	1
+../Core/Src/ili9341.c:135:6:ili9341_NCS_High	1
+../Core/Src/ili9341.c:140:6:ili9341_NCS_Low	1
+../Core/Src/ili9341.c:145:6:ili9341_WRX_High	1
+../Core/Src/ili9341.c:150:6:ili9341_WRX_Low	1
+../Core/Src/ili9341.c:155:6:ili9341_Write_Cmd	1
+../Core/Src/ili9341.c:164:6:ili9341_Write_Data	1

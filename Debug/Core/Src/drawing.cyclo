@@ -1,0 +1,5 @@
+../Core/Src/drawing.c:7:6:Draw_Pixel	3
+../Core/Src/drawing.c:15:6:Draw_Circle	4
+../Core/Src/drawing.c:31:6:Draw_Char	6
+../Core/Src/drawing.c:50:6:Draw_String	2
+../Core/Src/drawing.c:59:6:Fill_Black	3

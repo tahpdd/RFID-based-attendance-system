@@ -1,0 +1,4 @@
+../Core/Src/motor.c:4:6:motorInit	24	static
+../Core/Src/motor.c:24:6:setMotorPWM	32	static
+../Core/Src/motor.c:45:6:motorStart	16	static
+../Core/Src/motor.c:53:6:changeDirection	16	static

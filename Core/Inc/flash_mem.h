@@ -12,6 +12,7 @@
 #include <stdint.h>
 #include <string.h>
 
+
 // Function prototypes
 uint32_t Flash_Write_CharArr(char *data, uint32_t startAddress);
 HAL_StatusTypeDef Flash_Write_Byte(uint32_t address, uint8_t data);

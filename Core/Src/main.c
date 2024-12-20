@@ -69,6 +69,7 @@ uint8_t sNum[5];
 #define None 	104
 #define Test	105
 #define End		106
+#define SendData 107
 
 /* USER CODE END PV */
 
@@ -80,7 +81,59 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-int Npage = 0, Ppage = 0, state = ScanID, endScan = 0;
+const char *names[] = {
+	"BIEN PHUOC QUYEN",
+	"BUI NGUYEN DAI THANH",
+	"BUI VAN SINH",
+	"CAO QUANG MINH",
+	"DUONG ANH KHOI",
+	"DANG DUC PHAT",
+	"DAO DANG THANH AN",
+	"DAO TIEN HUNG",
+	"HO DANG MANH HUNG",
+	"HOANG MINH TUONG",
+	"HOANG TRONG DUONG",
+	"HUYNH GIA LAM",
+	"HUYNH KHUONG DUY",
+	"HUYNH NGOC QUYNH UYEN",
+	"LE HOANG THINH",
+	"LE THANH LOI",
+	"LY CHI HAI",
+	"MAI HOANG HUY",
+	"NGUYEN DANG THANH TUE",
+	"NGUYEN DINH QUOC",
+	"NGUYEN DUC HUY",
+	"NGUYEN HA HAI",
+	"NGUYEN HOANG GIA PHUC",
+	"NGUYEN MINH TRI",
+	"NGUYEN MINH ANH",
+	"NGUYEN NGO NHAT TOAN",
+	"NGUYEN NGOC DU",
+	"NGUYEN NGOC MINH QUOC",
+	"NGUYEN NHAT TAN",
+	"NGUYEN THANH HOANG",
+	"NGUYEN THANH QUAN",
+	"NGUYEN THANH AN",
+	"NGUYEN THI NHU QUYNH",
+	"NGUYEN TRUONG ANH KIEN",
+	"NGUYEN VU NAM",
+	"NGUYEN XUAN TRI",
+	"NONG HONG HOAT",
+	"PHAM THI PHUONG ANH",
+	"PHAN DANG KHOI",
+	"PHAN QUOC DUNG",
+	"PHAN TIEN NHAT",
+	"TONG VIET TRUONG",
+	"TRAN AN HUY",
+	"TRAN DONG TRUC LAM",
+	"TRAN LE THANH TUNG",
+	"TRAN MINH TRI",
+	"TRAN NGOC ANH",
+	"TRINH THU THANH",
+	"TRUONG CONG SON",
+	"NGUYEN THIEN HOAN PHUC"
+};
+int Npage = 0, Ppage = 0, state = ScanID, endScan = 0, isEnd = 0;
 const char *DAYS_OF_WEEK[7] = { "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" };
 uint8_t keyG = 0, keyB = 0, keyY = 0, keyR = 0;
 struct Student {
@@ -124,23 +177,51 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     		state = Reset;
     	}
     }
+    if (GPIO_Pin == GPIO_PIN_1)
+    {
+    	if (keyY == 0) {
+    		keyY = 1;
+    	} else {
+    		keyY = 0;
+    		state = SendData;
+    	}
+    }
+}
+
+const char* Get_Name(struct Page* p, int index, uint8_t cpage, uint8_t csize) {
+	if (strcmp(p[cpage].student[csize].ID, "CA985464") == 0) {
+		return names[49];
+	}
+	else if (strcmp(p[cpage].student[csize].ID, "7A1B4564") == 0) {
+		return names[29];
+	}
+	else if (strcmp(p[cpage].student[csize].ID, "AFB1564") == 0) {
+		return names[22];
+	}
+	else if (strcmp(p[cpage].student[csize].ID, "8C5058A1") == 0) {
+		return names[5];
+	}
+    int total_names = sizeof(names) / sizeof(names[0]);
+    uint32_t tick_value = HAL_GetTick();
+    int random_index = tick_value % total_names;
+    return names[random_index];
 }
 void Set_Time() {
 	DS1307_SetTimeZone(+7, 00);
-	DS1307_SetDate(11);
+	DS1307_SetDate(20);
 	DS1307_SetMonth(12);
 	DS1307_SetYear(2024);
-	DS1307_SetDayOfWeek(3);
-	DS1307_SetHour(23);
-	DS1307_SetMinute(15);
-	DS1307_SetSecond(01);
+	//DS1307_SetDayOfWeek(5);
+	DS1307_SetHour(18);
+	DS1307_SetMinute(00);
+	DS1307_SetSecond(00);
 }
 
 void UI_Init(uint8_t page, uint8_t size) {
 	Fill_Black(0, LCD_ACTIVE_WIDTH, 0, LCD_ACTIVE_HEIGHT);
 	char buffer[50];
 	Draw_String(30, 10, "CLASS: CE224.P14", COLOR_WHITE, COLOR_BLACK);
-	sprintf(buffer, "SS: %d/53", size);
+	sprintf(buffer, "SS: %d/50", size);
 	Draw_String(150, 10, buffer, COLOR_WHITE, COLOR_BLACK);
 	//Draw_String(150, 10, "SS: 0/53", COLOR_WHITE, COLOR_BLACK);
 	for (uint16_t x = 0; x < LCD_ACTIVE_WIDTH; x++) {
@@ -192,7 +273,7 @@ void printStudent(struct Page* p, uint8_t page, uint8_t order) {
 	else {
 		Draw_String(7, ty2, buffer, COLOR_WHITE, COLOR_BLACK);
 	}
-	Draw_String(30, ty1, "AAAAA AAAAA AAAAA AAAAA", COLOR_WHITE, COLOR_BLACK);
+	Draw_String(30, ty1, p[page].student[order].name, COLOR_WHITE, COLOR_BLACK);
 
 
 	sprintf(buffer, "MSSV: %s", p[page].student[order].ID);
@@ -231,7 +312,7 @@ void Address_Init(struct Page* p, uint8_t page) {
 }
 void New_SS(uint8_t size) {
 	char buffer[20];
-	sprintf(buffer, "SS: %d/53", size);
+	sprintf(buffer, "SS: %d/50", size);
 	Draw_String(150, 10, buffer, COLOR_WHITE, COLOR_BLACK);
 }
 uint8_t isDuplicateID(struct Page* p, uint8_t currentPage, uint8_t currentSize, const char* newID)
@@ -293,16 +374,19 @@ int main(void)
   SPI5_Core_Init();
   ili9341_IO_Init();
   ili9341_Init();
+  //Set_Time();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  char buffer[50], buffer2[50];
+  char buffer[50], buffer2[50], txBuffer[200];
   //char buffer1[50], buffer3[50], buffer4[50];
   uint8_t currentPage = 1, currentSize = 0, totalSize = 0, totalPage = 1;
   //UI_Init(currentPage, currentSize);
   struct Page page[12];
   DS1307_Init(&hi2c3);
+  //DS1307_SetDayOfWeek(4);
+  //Set_Time();
   Address_Init(page, 10);
 
 
@@ -313,6 +397,10 @@ int main(void)
 			  break;
 		  }
 		  strcpy(page[i].student[j].ID, buffer2);
+		  if (Flash_Read_CharArr(buffer2, page[i].student[j].addr + 0x10) == 0) {
+			  break;
+		  }
+		  strcpy(page[i].student[j].name, buffer2);
 		  if (Flash_Read_CharArr(buffer2, page[i].student[j].addr + 0x30) == 0) {
 			  break;
 		  }
@@ -333,8 +421,10 @@ int main(void)
 	  //Print_Students_InPg(page, currentPage, currentSize);
   }
   //__disable_irq();
+  int index = 0;
   while (1)
   {
+	  HAL_GPIO_WritePin(GPIOG, GPIO_PIN_14, 1);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -388,12 +478,14 @@ int main(void)
 		case ScanID:
 			MFRC522_Request(PICC_REQIDL, str);
 			status = MFRC522_Anticoll(str);
-			if (status == MI_OK)
+			if (status == MI_OK && isEnd != 1)
 			{
+
 				sprintf(buffer, "%X%X%X%X", str[0], str[1], str[2], str[3]);
 				if (isDuplicateID(page, totalPage, currentSize, buffer) == 1) {
 					break;
 				}
+				HAL_GPIO_WritePin(GPIOG, GPIO_PIN_14, 0);
 				//__disable_irq();
 				if (currentSize == 6) {
 					currentPage++;
@@ -404,16 +496,26 @@ int main(void)
 					UI_Init(currentPage, totalSize);
 				}
 				//page[currentPage].student[currentSize].order = totalSize + 1;
+				// Get uid
 				strcpy(page[currentPage].student[currentSize].ID, buffer);
 				Flash_Write_CharArr(buffer, page[currentPage].student[currentSize].addr);
-
+				// Get name
+				strcpy(buffer, Get_Name(page, index++, currentPage, currentSize));
+				strcpy(page[currentPage].student[currentSize].name, buffer);
+				Flash_Write_CharArr(buffer, page[currentPage].student[currentSize].addr + 0x10);
+				// Get time
 				Get_Time(buffer);
 				strcpy(page[currentPage].student[currentSize].time, buffer);
 				Flash_Write_CharArr(buffer, page[currentPage].student[currentSize].addr + 0x30);
+
 				printStudent(page, currentPage, currentSize);
+				sprintf(txBuffer, "%s|%s|%s", page[currentPage].student[currentSize].name, page[currentPage].student[currentSize].ID, page[currentPage].student[currentSize].time);
+				HAL_UART_Transmit(&huart1, txBuffer, strlen(txBuffer), 1000);
 				currentSize++;
 				totalSize++;
+				if (totalSize == 50) state = End;
 				New_SS(totalSize);
+
 				HAL_Delay(30000);
 				//__enable_irq();
 				//HAL_Delay(15000);
@@ -426,12 +528,13 @@ int main(void)
 			HAL_Delay(5000);
 			Fill_Black(0, LCD_ACTIVE_WIDTH, 0, LCD_ACTIVE_HEIGHT);
 			currentPage = 1, currentSize = 0, totalSize = 0, totalPage = 1;
+			isEnd = 0;
 			UI_Init(currentPage, totalSize);
 			state = ScanID;
 
 			break;
 		case End:
-
+			isEnd = 1;
 			break;
 		default:
 			break;

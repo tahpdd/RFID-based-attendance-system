@@ -1,6 +1,0 @@
-../Core/Src/servo.c:4:6:servoInit	1
-../Core/Src/servo.c:19:19:servoStart	1
-../Core/Src/servo.c:24:7:calc_DCPR	1
-../Core/Src/servo.c:30:14:angle2DutyCycle	1
-../Core/Src/servo.c:35:13:setServoPWM	6
-../Core/Src/servo.c:48:6:setServoAngle	3
